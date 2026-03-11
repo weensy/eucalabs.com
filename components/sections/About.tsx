@@ -13,20 +13,39 @@ export function About() {
     <section
       id="about"
       ref={ref}
-      className="py-24 px-6 bg-gradient-to-b from-mist to-sand/30"
+      className="px-6 py-24 lg:px-10"
     >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
         transition={{ duration: 0.6 }}
-        className="max-w-3xl mx-auto"
+        className="mx-auto grid max-w-7xl gap-10 rounded-[2rem] border border-white/80 bg-white/70 p-8 shadow-[0_24px_70px_rgba(34,34,34,0.05)] backdrop-blur-xl lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:p-12"
       >
-        <h2 className="font-serif text-4xl md:text-5xl font-light text-ink mb-8 text-center">
-          {about.title}
-        </h2>
-        <p className="font-sans text-lg md:text-xl text-ink/70 leading-relaxed text-center">
-          {about.content}
-        </p>
+        <div className="lg:pr-6">
+          <p className="font-sans text-xs uppercase tracking-[0.35em] text-ink/[0.45]">
+            {about.eyebrow}
+          </p>
+          <h2 className="mt-5 max-w-lg font-serif text-4xl font-light tracking-tight text-ink md:text-5xl">
+            {about.title}
+          </h2>
+        </div>
+
+        <div className="space-y-8">
+          <p className="max-w-2xl font-sans text-lg leading-8 text-ink/[0.68]">
+            {about.content}
+          </p>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {about.points.map((point) => (
+              <div
+                key={point}
+                className="rounded-[1.5rem] border border-ink/10 bg-mist px-5 py-6"
+              >
+                <p className="font-sans text-sm leading-7 text-ink/[0.65]">{point}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </motion.div>
     </section>
   )

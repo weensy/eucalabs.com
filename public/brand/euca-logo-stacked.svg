@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="860" viewBox="0 0 800 860">
+    <rect width="800" height="860" rx="44" fill="#FFFCF8"/>
+    <circle cx="400" cy="236" r="124" fill="#A9C7C5" opacity="0.24"/>
+    <image href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICAgIAogICAgCiAgICA8ZyBmaWxsPSIjMjIyMjIyIj4KICAgICAgPGVsbGlwc2UgY3g9IjQ1IiBjeT0iNDIiIHJ4PSIxMCIgcnk9IjE4IiB0cmFuc2Zvcm09InJvdGF0ZSgtMjYgNDUgNDIpIi8+CiAgICAgIDxlbGxpcHNlIGN4PSI1OCIgY3k9IjU4IiByeD0iMTAiIHJ5PSIxOCIgdHJhbnNmb3JtPSJyb3RhdGUoMjQgNTggNTgpIi8+CiAgICA8L2c+CiAgICA8cmVjdAogICAgICB4PSI0OC41IgogICAgICB5PSIzMSIKICAgICAgd2lkdGg9IjMiCiAgICAgIGhlaWdodD0iNDIiCiAgICAgIHJ4PSIxLjUiCiAgICAgIGZpbGw9IiMyMjIyMjIiCiAgICAgIHRyYW5zZm9ybT0icm90YXRlKC0xMCA1MCA1MCkiCiAgICAvPgogIAogIDwvc3ZnPg==" x="292" y="128" width="216" height="216"/>
+    <g transform="translate(-52 0)">
+      
+    <text
+      x="400"
+      y="504"
+      text-anchor="middle"
+      fill="#222222"
+      font-size="104"
+      font-family="Georgia, 'Times New Roman', serif"
+      letter-spacing="-2.8"
+    >Euca</text>
+    <text
+      x="533"
+      y="504"
+      fill="#222222"
+      opacity="0.58"
+      font-size="25"
+      font-family="Arial, sans-serif"
+      letter-spacing="7.2"
+    >LABS</text>
+  
+    </g>
+    <text x="400" y="538" text-anchor="middle" fill="#222222" opacity="0.6" font-size="30" font-family="Arial, sans-serif">Calm digital products, built with intent.</text>
+  </svg>

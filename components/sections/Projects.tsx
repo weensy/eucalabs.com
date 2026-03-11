@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { projects } from '@/data/projects'
-import { ExternalLink, Clock } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 
 export function Projects() {
   const ref = useRef(null)
@@ -14,19 +14,29 @@ export function Projects() {
     <section
       id="projects"
       ref={ref}
-      className="py-24 px-6 bg-gradient-to-b from-sand/30 to-mist"
+      className="bg-gradient-to-b from-sand/[0.35] to-mist px-6 py-24 lg:px-10"
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="mx-auto max-w-7xl">
         <motion.h2
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.6 }}
-          className="font-serif text-4xl md:text-5xl font-light text-ink mb-16 text-center"
+          className="max-w-3xl font-serif text-4xl font-light text-ink md:text-5xl"
         >
-          Our Projects
+          Selected work with a quieter point of view.
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <motion.p
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ duration: 0.6, delay: 0.08 }}
+          className="mt-6 max-w-3xl font-sans text-lg leading-8 text-ink/[0.62]"
+        >
+          We prefer fewer details, shown with more intention. Each project here balances visual
+          restraint with product clarity.
+        </motion.p>
+
+        <div className="mt-14 space-y-8">
           {projects.map((project, index) => (
             <motion.div
               key={project.name}
@@ -34,20 +44,7 @@ export function Projects() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              {project.status === 'live' && project.url ? (
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block group"
-                >
-                  <ProjectCard project={project} />
-                </a>
-              ) : (
-                <div className="cursor-default">
-                  <ProjectCard project={project} />
-                </div>
-              )}
+              <ProjectCard project={project} index={index} />
             </motion.div>
           ))}
         </div>
@@ -56,37 +53,83 @@ export function Projects() {
   )
 }
 
-function ProjectCard({ project }: { project: (typeof projects)[0] }) {
+function ProjectCard({
+  project,
+  index,
+}: {
+  project: (typeof projects)[0]
+  index: number
+}) {
+  const Wrapper = project.status === 'live' && project.url ? 'a' : 'div'
+
   return (
-    <div
-      className="bg-white/50 backdrop-blur-sm border border-ink/10 rounded-2xl p-8 h-full transition-all duration-300 hover:shadow-lg hover:border-ink/20 relative overflow-hidden"
-      style={{
-        background: `linear-gradient(135deg, ${project.accent}15 0%, transparent 100%)`,
-      }}
+    <Wrapper
+      {...(project.status === 'live' && project.url
+        ? {
+            href: project.url,
+            target: '_blank',
+            rel: 'noopener noreferrer',
+          }
+        : {})}
+      className="group block"
     >
-      {/* Accent line */}
-      <div
-        className="absolute top-0 left-0 w-full h-1 opacity-50"
-        style={{ backgroundColor: project.accent }}
-      />
+      <div className="grid gap-6 rounded-[2rem] border border-white/80 bg-white/75 p-6 shadow-[0_24px_70px_rgba(34,34,34,0.05)] backdrop-blur-xl lg:grid-cols-[minmax(18rem,0.9fr)_minmax(0,1.1fr)] lg:p-8">
+        <div
+          className={`relative overflow-hidden rounded-[1.75rem] border border-ink/10 p-6 ${index % 2 === 1 ? 'lg:order-2' : ''}`}
+          style={{
+            background: `linear-gradient(145deg, ${project.accent}55 0%, rgba(255,255,255,0.88) 68%)`,
+          }}
+        >
+          <div className="relative flex h-full min-h-[16rem] flex-col justify-between">
+            <div className="flex items-center justify-between">
+              <span className="rounded-full border border-white/70 bg-white/70 px-3 py-1 font-sans text-xs uppercase tracking-[0.22em] text-ink/50">
+                {project.category}
+              </span>
+              <span className="rounded-full bg-white/85 px-3 py-1 font-sans text-xs uppercase tracking-[0.18em] text-ink/[0.5]">
+                {project.status === 'live' ? 'Live' : 'In progress'}
+              </span>
+            </div>
 
-      <div className="flex items-start justify-between mb-4">
-        <h3 className="font-serif text-2xl font-medium text-ink">
-          {project.name}
-        </h3>
-        {project.status === 'live' ? (
-          <ExternalLink className="w-5 h-5 text-ink/40 group-hover:text-ink/70 transition-colors" />
-        ) : (
-          <div className="flex items-center gap-1.5 text-xs text-ink/40 font-sans">
-            <Clock className="w-4 h-4" />
-            <span>Soon</span>
+            <div className="max-w-sm">
+              <p className="font-serif text-4xl text-ink md:text-5xl">{project.name}</p>
+              <p className="mt-4 max-w-xs font-sans text-sm leading-7 text-ink/[0.62]">
+                {project.outcome}
+              </p>
+            </div>
           </div>
-        )}
-      </div>
+        </div>
 
-      <p className="font-sans text-ink/70 leading-relaxed">
-        {project.description}
-      </p>
-    </div>
+        <div className={`flex flex-col justify-between ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+          <div>
+            <p className="max-w-2xl font-sans text-base leading-8 text-ink/[0.65]">
+              {project.description}
+            </p>
+
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {project.highlights.map((highlight) => (
+                <div
+                  key={highlight}
+                  className="flex items-start gap-3 rounded-[1rem] border border-ink/10 bg-mist px-4 py-3"
+                >
+                  <span className="mt-[0.45rem] h-1.5 w-1.5 rounded-full bg-euca" />
+                  <span className="font-sans text-sm leading-6 text-ink/60">{highlight}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-10 flex items-center justify-between border-t border-ink/10 pt-6">
+            <p className="font-sans text-sm text-ink/[0.55]">
+              {project.status === 'live' ? 'Visit the live product' : 'Currently in progress'}
+            </p>
+            {project.status === 'live' ? (
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-ink/10 bg-mist text-ink transition-transform duration-200 group-hover:-translate-y-0.5">
+                <ArrowUpRight className="h-5 w-5" />
+              </span>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </Wrapper>
   )
 }

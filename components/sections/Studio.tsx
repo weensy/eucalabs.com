@@ -10,23 +10,36 @@ export function Studio() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section
-      id="studio"
-      ref={ref}
-      className="py-24 px-6 bg-gradient-to-b from-mist to-euca/10"
-    >
+    <section id="studio" ref={ref} className="px-6 py-24 lg:px-10">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
         transition={{ duration: 0.6 }}
-        className="max-w-3xl mx-auto"
+        className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]"
       >
-        <h2 className="font-serif text-4xl md:text-5xl font-light text-ink mb-8 text-center">
-          {studio.title}
-        </h2>
-        <p className="font-sans text-lg md:text-xl text-ink/70 leading-relaxed text-center">
-          {studio.content}
-        </p>
+        <div className="rounded-[2rem] bg-ink px-8 py-10 text-white shadow-[0_28px_70px_rgba(34,34,34,0.16)]">
+          <p className="font-sans text-xs uppercase tracking-[0.35em] text-white/50">
+            {studio.eyebrow}
+          </p>
+          <h2 className="mt-5 max-w-md font-serif text-4xl font-light tracking-tight md:text-5xl">
+            {studio.title}
+          </h2>
+          <p className="mt-8 max-w-xl font-sans text-lg leading-8 text-white/[0.72]">
+            {studio.content}
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          {studio.notes.map((note) => (
+            <div
+              key={note.title}
+              className="rounded-[2rem] border border-white/80 bg-white/75 p-8 shadow-[0_18px_45px_rgba(34,34,34,0.04)] backdrop-blur-xl"
+            >
+              <p className="font-serif text-3xl text-ink">{note.title}</p>
+              <p className="mt-4 font-sans text-sm leading-7 text-ink/[0.62]">{note.body}</p>
+            </div>
+          ))}
+        </div>
       </motion.div>
     </section>
   )

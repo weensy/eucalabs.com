@@ -3,42 +3,57 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { Mail } from 'lucide-react'
-import { siteConfig } from '@/lib/site.config'
+import { ArrowUpRight } from 'lucide-react'
+import { contact, siteConfig } from '@/lib/site.config'
 
 export function Contact() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section
-      id="contact"
-      ref={ref}
-      className="py-24 px-6 bg-gradient-to-b from-euca/10 to-mist"
-    >
+    <section id="contact" ref={ref} className="px-6 pb-24 pt-10 lg:px-10">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
         transition={{ duration: 0.6 }}
-        className="max-w-2xl mx-auto text-center"
+        className="mx-auto grid max-w-7xl gap-8 rounded-[2.25rem] bg-[linear-gradient(145deg,rgba(169,199,197,0.32),rgba(255,255,255,0.96)_55%,rgba(245,237,226,0.65))] p-8 shadow-[0_28px_70px_rgba(34,34,34,0.08)] lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)] lg:p-12"
       >
-        <h2 className="font-serif text-4xl md:text-5xl font-light text-ink mb-8">
-          Get in Touch
-        </h2>
-        <p className="font-sans text-lg text-ink/70 mb-12 leading-relaxed">
-          We&apos;d love to hear from you. Whether you have a question, feedback, or
-          just want to say hello—reach out anytime.
-        </p>
+        <div>
+          <p className="font-sans text-xs uppercase tracking-[0.35em] text-ink/[0.45]">
+            {contact.eyebrow}
+          </p>
+          <h2 className="mt-5 max-w-3xl font-serif text-4xl font-light tracking-tight text-ink md:text-5xl">
+            {contact.title}
+          </h2>
+          <p className="mt-8 max-w-2xl font-sans text-lg leading-8 text-ink/[0.66]">
+            {contact.content}
+          </p>
+        </div>
 
-        <motion.a
-          href={`mailto:${siteConfig.links.email}`}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center gap-3 bg-euca/20 hover:bg-euca/30 text-ink font-sans px-8 py-4 rounded-full transition-colors duration-300 border border-euca/30"
-        >
-          <Mail className="w-5 h-5" />
-          <span>{siteConfig.links.email}</span>
-        </motion.a>
+        <div className="flex flex-col justify-between rounded-[1.75rem] border border-white/80 bg-white/75 p-6 backdrop-blur-xl">
+          <div>
+            <p className="font-sans text-xs uppercase tracking-[0.28em] text-ink/[0.45]">
+              What happens next
+            </p>
+            <p className="mt-4 font-sans text-sm leading-7 text-ink/[0.62]">
+              We reply with fit, availability, and the next sensible step. A short brief is enough.
+            </p>
+          </div>
+
+          <motion.a
+            href={`mailto:${siteConfig.links.email}`}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="mt-10 inline-flex items-center justify-between rounded-full bg-ink px-6 py-4 font-sans text-sm text-white"
+          >
+            <span>Send project details</span>
+            <ArrowUpRight className="h-5 w-5" />
+          </motion.a>
+
+          <p className="mt-6 font-sans text-sm leading-7 text-ink/[0.58]">
+            Email goes to {siteConfig.links.email}. A short note is enough.
+          </p>
+        </div>
       </motion.div>
     </section>
   )

@@ -8,18 +8,33 @@
     --mist: #F9FAFA;
     --sand: #F5EDE2;
     --ink: #222222;
+    --paper: #FFFCF8;
   }
 
   * {
     @apply border-ink/10;
+    box-sizing: border-box;
   }
 
   body {
     @apply bg-mist text-ink antialiased;
+    background-image:
+      radial-gradient(circle at top left, rgba(169, 199, 197, 0.12), transparent 28%),
+      radial-gradient(circle at 85% 20%, rgba(245, 237, 226, 0.85), transparent 24%),
+      linear-gradient(180deg, #fdfdfc 0%, #f9fafa 100%);
   }
 
   html {
     scroll-behavior: smooth;
+  }
+
+  ::selection {
+    background: rgba(169, 199, 197, 0.35);
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
