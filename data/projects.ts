@@ -59,12 +59,12 @@ export const projects: Project[] = [
   },
   {
     name: 'Hokaope',
-    category: 'Hoikatsu support service',
+    category: 'Hokatsu support service',
     year: 'Soon',
     description:
-      'A service that helps families navigate hoikatsu with clearer information, practical guidance, and less administrative stress.',
+      'A service that helps families navigate hokatsu with clearer information, practical guidance, and less administrative stress.',
     outcome: 'A more organized way to prepare for childcare applications and make decisions with confidence.',
-    highlights: ['Hoikatsu guidance', 'Family decision support', 'Lower application stress'],
+    highlights: ['Hokatsu guidance', 'Family decision support', 'Lower application stress'],
     status: 'soon',
     accent: '#D8E6D5',
   },
