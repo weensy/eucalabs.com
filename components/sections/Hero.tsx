@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { hero } from '@/lib/site.config'
 import { projects } from '@/data/projects'
@@ -8,17 +8,32 @@ import { projects } from '@/data/projects'
 const featuredProject = projects.find((project) => project.status === 'live') ?? projects[0]
 
 export function Hero() {
+  const shouldReduceMotion = useReducedMotion()
+  const { scrollY } = useScroll()
+
+  const leadY = useTransform(scrollY, [0, 500], [0, -36])
+  const cardY = useTransform(scrollY, [0, 500], [0, 28])
+  const blobOneY = useTransform(scrollY, [0, 500], [0, 120])
+  const blobTwoY = useTransform(scrollY, [0, 500], [0, 80])
+
   return (
     <section className="relative overflow-hidden px-6 pb-20 pt-14 lg:px-10 lg:pb-28 lg:pt-20">
       <div className="absolute inset-x-0 top-0 -z-10 h-[36rem] bg-[radial-gradient(circle_at_top_left,_rgba(169,199,197,0.38),_transparent_42%),radial-gradient(circle_at_top_right,_rgba(245,237,226,0.9),_transparent_34%)]" />
-      <div className="absolute left-[12%] top-24 -z-10 h-72 w-72 rounded-full bg-euca/25 blur-3xl" />
-      <div className="absolute right-[10%] top-40 -z-10 h-60 w-60 rounded-full bg-sand blur-3xl" />
+      <motion.div
+        style={shouldReduceMotion ? undefined : { y: blobOneY }}
+        className="absolute left-[12%] top-24 -z-10 h-72 w-72 rounded-full bg-euca/25 blur-3xl"
+      />
+      <motion.div
+        style={shouldReduceMotion ? undefined : { y: blobTwoY }}
+        className="absolute right-[10%] top-40 -z-10 h-60 w-60 rounded-full bg-sand blur-3xl"
+      />
 
       <div className="mx-auto grid min-h-[calc(100svh-9rem)] max-w-7xl items-center gap-14 lg:grid-cols-[minmax(0,1.32fr)_minmax(18rem,0.68fr)]">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
+          style={shouldReduceMotion ? undefined : { y: leadY }}
           className="max-w-3xl"
         >
           <p className="font-sans text-xs uppercase tracking-[0.35em] text-ink/50">
@@ -62,6 +77,7 @@ export function Hero() {
           initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.15, duration: 0.8, ease: 'easeOut' }}
+          style={shouldReduceMotion ? undefined : { y: cardY }}
           className="relative max-w-[24rem] lg:ml-auto"
         >
           <div className="rounded-[2rem] border border-white/70 bg-white/70 p-6 shadow-[0_24px_60px_rgba(34,34,34,0.06)] backdrop-blur-xl">

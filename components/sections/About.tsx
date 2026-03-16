@@ -1,13 +1,18 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { about } from '@/lib/site.config'
 
 export function About() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const shouldReduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const cardY = useTransform(scrollYProgress, [0, 1], [36, -24])
 
   return (
     <section
@@ -19,6 +24,7 @@ export function About() {
         initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
         transition={{ duration: 0.6 }}
+        style={shouldReduceMotion ? undefined : { y: cardY }}
         className="mx-auto grid max-w-7xl gap-10 rounded-[2rem] border border-white/80 bg-white/70 p-8 shadow-[0_24px_70px_rgba(34,34,34,0.05)] backdrop-blur-xl lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:p-12"
       >
         <div className="lg:pr-6">

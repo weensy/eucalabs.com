@@ -1,7 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { projects } from '@/data/projects'
 import { ArrowUpRight } from 'lucide-react'
@@ -60,7 +59,15 @@ function ProjectCard({
   project: (typeof projects)[0]
   index: number
 }) {
+  const cardRef = useRef(null)
   const Wrapper = project.status === 'live' && project.url ? 'a' : 'div'
+  const shouldReduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ['start end', 'end start'],
+  })
+  const visualY = useTransform(scrollYProgress, [0, 1], [26, -18])
+  const textY = useTransform(scrollYProgress, [0, 1], [-12, 14])
 
   return (
     <Wrapper
@@ -73,10 +80,14 @@ function ProjectCard({
         : {})}
       className="group block"
     >
-      <div className="grid gap-6 rounded-[2rem] border border-white/80 bg-white/75 p-6 shadow-[0_24px_70px_rgba(34,34,34,0.05)] backdrop-blur-xl lg:grid-cols-[minmax(18rem,0.9fr)_minmax(0,1.1fr)] lg:p-8">
-        <div
+      <div
+        ref={cardRef}
+        className="grid gap-6 rounded-[2rem] border border-white/80 bg-white/75 p-6 shadow-[0_24px_70px_rgba(34,34,34,0.05)] backdrop-blur-xl lg:grid-cols-[minmax(18rem,0.9fr)_minmax(0,1.1fr)] lg:p-8"
+      >
+        <motion.div
           className={`relative overflow-hidden rounded-[1.75rem] border border-ink/10 p-6 ${index % 2 === 1 ? 'lg:order-2' : ''}`}
           style={{
+            ...(shouldReduceMotion ? {} : { y: visualY }),
             background: `linear-gradient(145deg, ${project.accent}55 0%, rgba(255,255,255,0.88) 68%)`,
           }}
         >
@@ -97,9 +108,12 @@ function ProjectCard({
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className={`flex flex-col justify-between ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+        <motion.div
+          style={shouldReduceMotion ? undefined : { y: textY }}
+          className={`flex flex-col justify-between ${index % 2 === 1 ? 'lg:order-1' : ''}`}
+        >
           <div>
             <p className="max-w-2xl font-sans text-base leading-8 text-ink/[0.65]">
               {project.description}
@@ -128,7 +142,7 @@ function ProjectCard({
               </span>
             ) : null}
           </div>
-        </div>
+        </motion.div>
       </div>
     </Wrapper>
   )

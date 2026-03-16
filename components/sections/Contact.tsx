@@ -1,7 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { contact, siteConfig } from '@/lib/site.config'
@@ -9,6 +8,12 @@ import { contact, siteConfig } from '@/lib/site.config'
 export function Contact() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const shouldReduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const sectionY = useTransform(scrollYProgress, [0, 1], [28, -16])
 
   return (
     <section id="contact" ref={ref} className="px-6 pb-24 pt-10 lg:px-10">
@@ -16,6 +21,7 @@ export function Contact() {
         initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
         transition={{ duration: 0.6 }}
+        style={shouldReduceMotion ? undefined : { y: sectionY }}
         className="mx-auto grid max-w-7xl gap-8 rounded-[2.25rem] bg-[linear-gradient(145deg,rgba(169,199,197,0.32),rgba(255,255,255,0.96)_55%,rgba(245,237,226,0.65))] p-8 shadow-[0_28px_70px_rgba(34,34,34,0.08)] lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)] lg:p-12"
       >
         <div>
